@@ -14,7 +14,6 @@ require('dotenv').config();
 exports.getAllHospitalsAndExcludedByData = asyncHandler(async (req, res, next) => {
     const hospital = await new PaginationAndFilter(Hospital);
     const hospitals = await hospital.getPaginatedAndFilteredResults(req.query);
-    console.log(hospitals);
     res.json(hospitals);
 });
 // ------------------ getAllHospitalsAndExcludedByData -------------------

@@ -19,23 +19,12 @@ const adminSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please Enter a valid Email"],
     trim: true
   },
-  // email2: {
-  //   type: String,
-  //   required:false,
-  //   trim: true
-  // },
   mobile: {
     type: Number,
     max: [9999999999, "Enter A valid mobile number"],
     min: [1000000000, "Enter A valid mobile number"],
     trim: true
   },
-  // mobile2: {
-  //   type: Number,
-  //   max: [9999999999, "Enter A valid Mobile2"],
-  //   min: [1000000000, "Enter A valid Mobile2"],
-  //   trim: true
-  // },
   password: {
     type: String,
     required: [true, "Please Enter Your Password"],
@@ -43,38 +32,6 @@ const adminSchema = new mongoose.Schema({
     select: false,
     trim: true
   },
-  // address1: {
-  //   type: String,
-  //   trim: true
-  // },
-  // address2: {
-  //   type: String,
-  //   trim: true
-  // },
-  // whatsapp: {
-  //     type: String
-  // },
-  // linkInd: {
-  //     type: String
-  // },
-  // facebook: {
-  //     type: String
-  // },
-  // googlemap: {
-  //     type: String
-  // },
-  // avatar: {
-  //     type: String
-  // },
-  // track: {
-  //     type: Number,
-  //     default:0
-  // },
-  // role:{
-  //     type: String,
-  //     default:"team",
-  //     required:[true,"Please Enter the role"]
-  // },
   createdAt: {
     type: Date,
     default: Date.now,

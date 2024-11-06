@@ -18,7 +18,7 @@ router.route("/getAllInsuranceCompaniesNameId").get(getAllInsuranceCompaniesName
 //---------- fetch all InsuranceCompanies ---------
 
 // ---------- fetch all Hospitals ---------
-router.route("/getAllHospitalsNameId").get(getAllHospitalsNameId);
+// router.route("/getAllHospitalsNameId").get(getAllHospitalsNameId);
 //---------- fetch all Hospitals ---------
 
 // ----------- get all TPANames -------------- 

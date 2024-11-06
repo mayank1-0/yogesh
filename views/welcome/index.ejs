@@ -22,11 +22,11 @@
 
 <body>
     <!-- Login Modal Structure -->
-    <div class="modal fade login-modal login_main_modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel"
+    <div class="modal fade login-modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-sm-down pop-up-main">
             <div class="modal-content">
-                <div class="modal-header login-modal-header">
+                <div class="modal-header">
                     <button type="button" class="btn btn-primary" id="tpa-login">TPA </button>
                     <!-- <button type="button" class="btn btn-primary" id="hospital-login">HOSPITAL </button> -->
                     <button type="button" class="btn btn-primary" id="insurance-com-login">INSURANCE COMPANY </button>
@@ -244,12 +244,12 @@
                                                     placeholder="Enter password">
                                                 <label for="tpaPassword">Password</label>
                                             </div>
-                                            <div class="form-floating">
+                                            <!-- <div class="form-floating">
                                                 <select class="form-select" aria-label="Default select example"
                                                     id="ExcludeHospitalbyTPA">
                                                     <option value="">Exclude Hospital </option>
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                             <button type="submit" class="btn btn-primary"
                                                 id="submitTpaForm">Submit</button>
@@ -301,12 +301,12 @@
                                                     id="insuranceCompanyPassword" placeholder="Password ">
                                                 <label for="insuranceEstablishYear">Password </label>
                                             </div>
-                                            <div class="form-floating">
+                                            <!-- <div class="form-floating">
                                                 <select class="form-select" aria-label="Default select example"
                                                     id="ExcludeHospitalbyInsuranceCompany">
                                                     <option value="">Exclude Hospital </option>
                                                 </select>
-                                            </div>
+                                            </div> -->
 
                                             <button type="submit" class="btn btn-primary"
                                                 id="submitInsuranceForm">Submit</button>
@@ -580,7 +580,7 @@
                                         <div class="modal-body">
                                             <div class="home_tpa_ins_popup">
                                                 <div class="ins_main">
-                                                    <ul id="insurance-list " class="ins_main_ul">
+                                                    <ul id="insurance-list">
                                                         <li> Excluded by Insurance company </li>
 
                                                     </ul>
@@ -686,7 +686,6 @@
         // Function to set loginType based on the button clicked
         function setLoginType(type) {
             loginType = type;
-            console.log(`Login type selected: ${loginType}`);
         }
 
         $(document).ready(function () {
@@ -705,7 +704,6 @@
         });
 
         $(window).on('load', function () {
-            console.log('Page loaded successful');
             loadHospitalsAndExcludedByData();
             fetchInsuranceCompanyNamesData();
             fetchTPANamesData()
@@ -713,19 +711,16 @@
 
         $("#tpaForm").submit((e) => {
             e.preventDefault();
-            console.log(`TPA form submitted`);
             registerTPA();
         });
 
         $("#insuranceCompanyForm").submit((e) => {
             e.preventDefault();
-            console.log(`InsuranceCompany form submitted`);
             registerInsuranceCompany();
         });
 
         $("#hospitalRequestForm").submit((e) => {
             e.preventDefault();
-            console.log(`HospitalRequest form submitted`);
             registerHospital();
         });
 
@@ -738,7 +733,7 @@
         // Call the function when you want to fetch the data, e.g., before showing the modal
 
         $('#insuranceCompanyModal').on('show.bs.modal', function () {
-            fetchAllHospitalsNameId();
+            // fetchAllHospitalsNameId();
         });
 
         $('#main-login-button').on('click', login);
@@ -748,7 +743,6 @@
         })
 
         function registerTPA() {
-            console.log('Register TPA Btn Clicked');
             var excludedHospitals = $("#ExcludeHospitalbyTPA").val();
             var data = {
                 name: $("#tpaName").val(),
@@ -760,14 +754,12 @@
                 excludedHospitals: excludedHospitals && excludedHospitals.length ? excludedHospitals : [], // Convert to array
 
             }
-            console.log(data);
             $.ajax({
                 type: "POST",
                 url: "/api/tpa/sign-up",
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
-                    console.log('result', result);
                     window.alert('TPA signup successful');
                     window.location.href = '/';
                 },
@@ -779,7 +771,6 @@
         }
 
         function registerInsuranceCompany() {
-            console.log('Register InsuranceCompany Btn Clicked');
             var excludedHospitals = $("#ExcludeHospitalbyInsuranceCompany").val();
             var data = {
                 name: $("#insuranceCompanyName").val(),
@@ -791,14 +782,12 @@
                 password: $("#insuranceCompanyPassword").val(),
                 excludedHospitals: excludedHospitals && excludedHospitals.length ? excludedHospitals : [], // Convert to array
             }
-            console.log(data);
             $.ajax({
                 type: "POST",
                 url: "/api/insuranceCompany/sign-up",
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
-                    console.log('result', result);
                     window.alert('Insurance Company sign-up successful');
                     window.location.href = '/';
                 },
@@ -810,9 +799,6 @@
         }
 
         function registerHospital() {
-            // var excludedTPAs = $("#ExcludedTPA").val();
-            // var excludedInsuranceCompanies = $("#ExcludedInsuranceCompany").val();
-
             var data = {
                 name: $("#hospitalName").val(),
                 contactPerson: $("#hospitalContactPerson").val(),
@@ -823,17 +809,13 @@
                 district: $("#hospitalDistrict").val(),
                 state: $("#hospitalState").val(),
                 password: $("#hospitalEmailPassword").val(),
-                // excludedTPAs: excludedTPAs && excludedTPAs.length ? excludedTPAs : [], // Convert to array
-                // excludedInsuranceCompanies: excludedInsuranceCompanies && excludedInsuranceCompanies.length ? excludedInsuranceCompanies : [] // Ensure it's an array
             }
-            console.log(data);
             $.ajax({
                 type: "POST",
                 url: "/api/hospital/sign-up",
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
-                    console.log('result', result);
                     window.alert('Hospital request sign-up successful');
                     window.location.href = '/';
                 },
@@ -912,27 +894,6 @@
             })
         }
 
-        function fetchAllHospitalsNameId() {
-            $.ajax({
-                type: "GET",
-                url: `/api/welcome/getAllHospitalsNameId`,
-                success: function success(result) {
-                    const hospitals = result.hospitals;
-                    // Clear existing options in the dropdowns
-                    // $('#ExcludedInsuranceCompany').empty().append('<option selected>Ex. Insurance Company</option>');
-
-                    // Populate Excluded InsuranceCompanies Dropdown
-                    hospitals.forEach(function (hospital) {
-                        $('#ExcludeHospitalbyTPA').append(`<option value="${hospital._id}">${hospital.name}</option>`);
-                        $('#ExcludeHospitalbyInsuranceCompany').append(`<option value="${hospital._id}">${hospital.name}</option>`);
-                    });
-                },
-                error: function error(error) {
-                    console.log(error, 'error');
-                }
-            })
-        }
-
         function fetchTPANamesData() {
             $.ajax({
                 type: "GET",
@@ -978,7 +939,6 @@
         function login() {
             // Implement your login logic here
             if (!loginType) return window.alert('Please select a Login type');
-            console.log(`Attempting to login as: ${loginType}`);
 
             const email = $('#loginUserId').val();
             const password = $('#loginPassword').val();
@@ -991,7 +951,6 @@
 
             if (!email || !password || !captcha) return window.alert('Please fill all the input fields');
             // Perform your login logic (e.g., AJAX call)
-            console.log(`User ID: ${email}, Password: ${password}, Captcha: ${captcha}`);
 
             $.ajax({
                 type: "POST",
@@ -999,7 +958,6 @@
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
-                    console.log('result', result);
                     window.alert('Sign in success');
                     if (loginType == "insuranceCompany") window.location.href = "/insurance-company/dashboard"
                     else window.location.href = "/tpa/dashboard"

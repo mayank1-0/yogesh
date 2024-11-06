@@ -10,6 +10,7 @@ const adminRoutes = require("./routes/admin");
 const tpaApiRoutes = require("./routes/tpa");
 const insuranceCompanyApiRoutes = require('./routes/insuranceCompany');
 const hospitalApiRoutes = require('./routes/hospital');
+const emailApiRoutes = require('./routes/email');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const app = express();
@@ -68,6 +69,10 @@ app.use('/api/insuranceCompany', insuranceCompanyApiRoutes);
 // ----- all hospital related apis -----
 app.use('/api/hospital', hospitalApiRoutes);
 // ----- all hospital related apis -----
+
+// ----- all email related apis -----
+app.use('/api/email', emailApiRoutes);
+// ----- all email related apis -----
 
 app.use(ErrorMiddleware)
 

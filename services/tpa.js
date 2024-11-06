@@ -3,7 +3,6 @@ const isTPA = require('../middleware/isTPA');
 
 router.route("/dashboard").get(isTPA, (req,res)=>{
     const tpa = req.tpa;
-    console.log(`111 ${tpa}`);
     res.render("Tpa/tpa-dashboard", {
         tpaName: tpa.name.name
     });

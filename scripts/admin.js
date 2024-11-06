@@ -22,7 +22,6 @@ const admininitialize = asyncHandler(async () => {
         password:"12345678",
         mobile:1234567890,
         })
-    console.log("admin init Successfully \n admin Infomation \n name=>admin\n email=>admin@gmail.com\npassword=>sag@123456")
     process.exit(1)
 });
 

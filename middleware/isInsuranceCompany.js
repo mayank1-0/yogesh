@@ -6,7 +6,6 @@ const InsuranceCompany = require("../models/insuranceCompany");
 const isInsuranceCompany = asyncHandler(async (req, res, next) => {
 
     const { insuranceCompanytoken } = req.cookies;
-    console.log(insuranceCompanytoken, "insuranceCompanytoken")
     if (!insuranceCompanytoken) {
         return res.status(401).redirect('/');
     }

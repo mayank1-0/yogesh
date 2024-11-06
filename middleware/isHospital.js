@@ -5,7 +5,6 @@ const Hospital = require("../models/hospital");
 
 const isHospital = asyncHandler(async (req, res, next) => {
     const { hospitaltoken } = req.cookies;
-    console.log(hospitaltoken, "hospitaltoken")
     if (!hospitaltoken) {
         return res.status(401).redirect('/');
     }

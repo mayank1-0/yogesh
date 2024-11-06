@@ -1,4 +1,4 @@
-const { loginAdmin, logout, forgotPassword, resetPassword, getAdminDetails, UpdateDetails, changePassword, getAllVerifiedTPAsCount, getAllVerifiedInsuranceCompaniesCount, getAllVerifiedHospitalsCount, getAllUnVerifiedTPAsCount, getAllUnVerifiedInsuranceCompaniesCount, getAllUnVerifiedHospitalsCount, verifyUnVerifyHospital, verifyUnVerifyTpa, verifyUnverifyInsuranceCompany, deleteApprovedTableDocument, addTPAName, addInsuranceCompanyName, getAllHospitalsRequest, getAllHospitalsDetails, getAllInsuranceCompaniesRequest, getAllInsuranceCompaniesDetails, getAllTPAsRequest, getAllTPADetails, getExcludedHospitalList } = require("../controllers/admin");
+const { loginAdmin, logout, forgotPassword, resetPassword, getAdminDetails, UpdateDetails, changePassword, getAllVerifiedTPAsCount, getAllVerifiedInsuranceCompaniesCount, getAllVerifiedHospitalsCount, getAllUnVerifiedTPAsCount, getAllUnVerifiedInsuranceCompaniesCount, getAllUnVerifiedHospitalsCount, verifyUnVerifyHospital, verifyUnVerifyTpa, verifyUnverifyInsuranceCompany, deleteApprovedTableDocument, addTPAName, addInsuranceCompanyName, getAllHospitalsRequest, getAllHospitalsDetails, getAllInsuranceCompaniesRequest, getAllInsuranceCompaniesDetails, getAllTPAsRequest, getAllTPADetails, getExcludedHospitalList, GetSingleHospital, updateMembershipStatus } = require("../controllers/admin");
 const router = require("express").Router();
 const isAdmin = require('../middleware/isAdmin');
 
@@ -94,7 +94,12 @@ router.route("/getAllTPADetails").get(isAdmin, getAllTPADetails);
 router.route("/excluded-hospital-list").get(isAdmin, getExcludedHospitalList);
 //---------- fetch hospital list ---------
 
+//---------- get hospital by id ---------------------
+router.route("/hospital-by-id/:id").get(isAdmin,GetSingleHospital);
+//---------- get hospital by id ---------------------
 
-
+//----------------- update membership status -------------
+router.route("/update-membership-status/:status/:id").put(isAdmin, updateMembershipStatus);
+//------------------update membership status ------------
 
 module.exports = router;

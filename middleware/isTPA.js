@@ -6,7 +6,6 @@ const TPA = require("../models/TPA");
 const isTPA = asyncHandler(async (req, res, next) => {
 
     const { tpatoken } = req.cookies;
-    console.log(tpatoken, "tpatoken")
     if (!tpatoken) {
         return res.status(401).redirect('/');
     }

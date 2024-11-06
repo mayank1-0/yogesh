@@ -52,7 +52,6 @@
 <script>
   $("#sign-in-form").submit((e) => {
     e.preventDefault();
-    console.log(`Admin sign-in`);
     login();
   });
 
@@ -69,12 +68,10 @@
       dataType: 'JSON',
       data: data,
       success: function success(result) {
-        console.log('result', result);
         window.alert('Sign in success');
         window.location.href = '/admin/dashboard';
       },
       error: function error(error) {
-        console.log(error, 'error');
         window.alert(`${error.responseJSON.message}`);
       }
     })

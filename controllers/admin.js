@@ -541,16 +541,7 @@ exports.getAllTPADetails = asyncHandler(async (req, res, next) => {
 exports.getExcludedHospitalList = asyncHandler(async (req, res, next) => {
   const { listType } = req.query;
   let hospitals;
-  if (!listType) {
-    hospitals = await Hospital.find({
-      isVerified: 'Approve',
-      membershipStatus: "Not_Required",
-      $or: [
-        { excludedByTPAs: { $exists: true, $ne: [] } }, // At least one value in excludedByTPAs
-        { excludedByInsuranceCompanies: { $exists: true, $ne: [] } } // At least one value in excludedByInsuranceCompanies
-      ]
-    });
-  } else if( listType == 'Paid') {
+  if (listType == 'Paid') {
     hospitals = await Hospital.find({
       membershipStatus: listType,
       isVerified: 'Approve',
@@ -560,7 +551,7 @@ exports.getExcludedHospitalList = asyncHandler(async (req, res, next) => {
       ]
     });
   }
-  else if( listType == 'Unpaid') {
+  else if (listType == 'Unpaid') {
     hospitals = await Hospital.find({
       membershipStatus: listType,
       isVerified: 'Approve',
@@ -570,7 +561,7 @@ exports.getExcludedHospitalList = asyncHandler(async (req, res, next) => {
       ]
     });
   }
-  else if( listType == 'Renewal') {
+  else if (listType == 'Renewal') {
     hospitals = await Hospital.find({
       membershipStatus: listType,
       isVerified: 'Approve',
@@ -587,3 +578,48 @@ exports.getExcludedHospitalList = asyncHandler(async (req, res, next) => {
   });
 });
 // ------------- paid membership hospitals having excludedByTPAorInsuranceCompany ---------------
+
+// ========================================= Get Single hospital =====================================
+exports.GetSingleHospital = asyncHandler(async (req, res, next) => {
+  let hospital = await Hospital.findById(req.params.id)
+  res.status(200).json({ success: true, message: "hospital fetched successfully!", hospital })
+})
+
+exports.updateMembershipStatus = asyncHandler(async (req, res, next) => {
+  const { status, id } = req.params;
+
+  // Validate the status
+  const validStatuses = ['Paid', 'Unpaid', 'Renewal'];
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({ message: "Invalid membership status." });
+  }
+
+  const hospital = await Hospital.findById(id);
+  if (!hospital) {
+    return res.status(404).json({ message: "Hospital not found." });
+  }
+
+  hospital.membershipStatus = status;
+
+  if (status === 'Paid') {
+    hospital.membershipBoughtDate = Date.now();
+    // Automatically set renewal date
+    hospital.membershipRenewalDate = new Date(hospital.membershipBoughtDate);
+    hospital.membershipRenewalDate.setFullYear(hospital.membershipRenewalDate.getFullYear() + 1);
+  } else if (status === 'Renewal') {
+    // Set renewal date to one year from now, keep bought date unchanged
+    hospital.membershipRenewalDate = new Date();
+    hospital.membershipRenewalDate.setFullYear(hospital.membershipRenewalDate.getFullYear() + 1);
+    // Optional: You might want to set membershipBoughtDate to now as well
+    hospital.membershipBoughtDate = Date.now();
+  } else if (status === 'Unpaid') {
+    // Clear dates if membership is unpaid
+    hospital.membershipBoughtDate = null;
+    hospital.membershipRenewalDate = null;
+  }
+
+  await hospital.save();
+
+  res.status(200).json({
+    message: "Membership status updated successfully.", hospital });
+})

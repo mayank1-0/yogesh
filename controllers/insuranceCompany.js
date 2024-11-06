@@ -137,6 +137,7 @@ exports.excludeHospital = asyncHandler(async (req, res, next) => {
 
   // Mark the hospital as excluded (you could also create a field for this)
   hospital.excludedByInsuranceCompanies.push(insuranceCompany._id); // Assuming you're tracking which user excluded it
+  hospital.membershipStatus = 'Unpaid';
   await hospital.save();
 
   return res.status(200).json({ success: true, message: 'Hospital excluded successfully' });
@@ -165,6 +166,7 @@ exports.unExcludeHospital = asyncHandler(async (req, res, next) => {
 
   // Remove the hospital ID from the excludedByInsuranceCompanies array
   hospital.excludedByInsuranceCompanies.splice(indexInHospital, 1);
+  hospital.membershipStatus = 'Not_Required';
   await hospital.save();
 
   const indexInInsuranceCompany = insuranceCompany.excludedHospitals.indexOf(hospitalId);

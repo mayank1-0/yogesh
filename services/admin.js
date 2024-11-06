@@ -46,12 +46,6 @@ router.route("/subscriptions").get(isAdmin, (req, res) => {
 router.route("/compose").get( (req, res) => {
     res.render("admin/email/compose");
 });
-router.route("/inbox").get( (req, res) => {
-    res.render("admin/email/inbox");
-});
-router.route("/email-detail").get( (req, res) => {
-    res.render("admin/email/email-detail");
-});
 router.route("/email-sent").get( (req, res) => {
     res.render("admin/email/email-sent");
 });
